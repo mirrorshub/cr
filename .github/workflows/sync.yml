@@ -2,7 +2,7 @@ name: Sync
 
 on:
   schedule:
-    - cron: "0 20 * * *"
+    - cron: "30 * * * *"
   push:
     branches:
       - main
