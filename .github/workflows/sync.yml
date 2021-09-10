@@ -1,0 +1,27 @@
+name: Sync
+
+on:
+  schedule:
+    - cron: "0 20 * * *"
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  sync-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get -y update && sudo apt-get -y install skopeo
+      - name: Sync Docker Images
+        env:
+          GH_ID: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
+          sudo skopeo sync --all --src yaml --dest docker sync.yml ghcr.io/mirrorshub/
