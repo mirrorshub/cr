@@ -24,4 +24,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
-          sudo skopeo sync --all --src yaml --dest docker sync.yml ghcr.io/mirrorshub/
+          sudo skopeo sync --all --remove-signatures --src yaml --dest docker sync.yml ghcr.io/mirrorshub/
