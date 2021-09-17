@@ -4,12 +4,12 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-DEFAULT_REGEX='^v?\d+(\.\d+){0,2}(-.+)?$|^latest$'
-images="$(cat source.txt | tr -d ' ' | grep -v -E '^$' | grep -v -E '^#')"
+source "$(dirname "${BASH_SOURCE}")/helper.sh"
+cd "${ROOT}"
 
 declare -A DOMAIN_MAP=()
 
-for image in $images; do
+for image in $(helper::get_source); do
     key="${image%%/*}"
     val="${image#*/}"
     if [[ -v "DOMAIN_MAP[${key}]" ]]; then
@@ -20,15 +20,17 @@ for image in $images; do
 done
 
 for domain in "${!DOMAIN_MAP[@]}"; do
+    file="${domain}.yaml"
     list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
-    echo "'${domain}':"
-    echo "  images-by-tag-regex:"
+    echo "'${domain}':" >"${file}"
+    echo "  images-by-tag-regex:" >>"${file}"
     for image in ${list}; do
         regex="${DEFAULT_REGEX}"
         if [[ "${image}" =~ ":" ]]; then
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        echo "    '${image}': '${regex}'"
+        echo "    '${image}': '${regex}'" >>"${file}"
     done
+    ${SKOPEO} sync --all --remove-signatures --src yaml --dest docker -f oci "${file}" $(helper::replace_domain "${domain}")
 done

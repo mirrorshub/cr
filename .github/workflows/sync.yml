@@ -21,5 +21,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
-          ./hack/gen-source-yaml.sh > source.yml
-          sudo skopeo sync --all --remove-signatures --src yaml --dest docker -f oci source.yml ghcr.io/mirrorshub/
+          sudo ./hack/sync.sh
