@@ -1,0 +1,27 @@
+name: "Deep Check CN"
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check
+        env:
+          INCREMENTAL: "true"
+          PARALLET: "10"
+          DOMAIN_FILE: "domain_cn.txt"
+        run: |
+          ./hack/check.sh
+      - name: Update badge
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Generated for update gist
+          BADGE_PREFIX: "gist://wzshiming/1cf6080be8c04c6ca70c2a4cc4b93afc"
+        run: |
+          wget https://github.com/wzshiming/putingh/releases/download/v0.6.2/putingh_linux_amd64 -O /usr/local/bin/putingh && chmod +x /usr/local/bin/putingh
+          GH_TOKEN="${GH_TOKEN}" putingh "${BADGE_PREFIX}/cr-cn-deep-sync-badge.svg" badge.svg
+          GH_TOKEN="${GH_TOKEN}" putingh "${BADGE_PREFIX}/cr-cn-deep-sync.log" sync.log

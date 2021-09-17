@@ -1,0 +1,21 @@
+name: "Sync CN"
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 18 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Sync Docker Images
+        env:
+          ALIYUN_ID: ${{ secrets.ALIYUN_ID }}
+          ALIYUN_TOKEN: ${{ secrets.ALIYUN_TOKEN }}
+          DOMAIN_FILE: "domain_cn.txt"
+        run: |
+          sudo skopeo login -u ${ALIYUN_ID} -p ${ALIYUN_TOKEN} registry.cn-shanghai.aliyuncs.com/sm
+          sudo ./hack/sync.sh
