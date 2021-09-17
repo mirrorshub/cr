@@ -1,2 +1,3 @@
-k8s.gcr.io=ghcr.io/mirrorshub
-gcr.io=ghcr.io/mirrorshub
+docker.io=ghcr.io/mirrorshub/docker
+gcr.io=ghcr.io/mirrorshub/gcr
+k8s.gcr.io=ghcr.io/mirrorshub/k8s

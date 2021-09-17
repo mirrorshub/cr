@@ -1,6 +1,13 @@
+docker.io/library/alpine
+docker.io/library/busybox
+docker.io/library/centos
+docker.io/library/mysql
+docker.io/library/nginx
+docker.io/library/redis
+docker.io/library/registry
 k8s.gcr.io/coredns
-k8s.gcr.io/pause
 k8s.gcr.io/kube-apiserver
 k8s.gcr.io/kube-controller-manager
 k8s.gcr.io/kube-proxy
 k8s.gcr.io/kube-scheduler
+k8s.gcr.io/pause
