@@ -15,13 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          sudo apt-get -y update && sudo apt-get -y install skopeo
       - name: Sync Docker Images
         env:
           GH_ID: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
-          sudo skopeo sync --all --remove-signatures --src yaml --dest docker -f oci sync.yml ghcr.io/mirrorshub/
+          ./hack/gen-source-yaml.sh > source.yml
+          sudo skopeo sync --all --remove-signatures --src yaml --dest docker -f oci source.yml ghcr.io/mirrorshub/
