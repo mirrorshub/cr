@@ -16,6 +16,8 @@ jobs:
         env:
           GH_ID: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INCREMENTAL: "true"
+          PARALLET: "10"
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
           sudo ./hack/sync.sh

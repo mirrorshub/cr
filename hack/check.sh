@@ -37,13 +37,13 @@ for domain in "${!DOMAIN_MAP[@]}"; do
             image="${image%:*}"
         fi
         DEBUG="${DEBUG}" QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FORUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}")/${image}" 2>&1 | tee -a "${LOGFILE}" || {
-            echo "Error: diff image ${line} ${new_image}"
+            echo "Error: diff image ${domain}/${image} $(helper::replace_domain ${domain})/${image}"
         }
     done
 done
 
-sync="$(cat "${LOGFILE}" | grep " SYNC: " | wc -l | tr -d ' ' || :)"
-unsync="$(cat "${LOGFILE}" | grep " UNSYNC: " | wc -l | tr -d ' ' || :)"
+sync="$(cat "${LOGFILE}" | grep " SYNCHRONIZED: " | wc -l | tr -d ' ' || :)"
+unsync="$(cat "${LOGFILE}" | grep " NOT-SYNCHRONIZED: " | wc -l | tr -d ' ' || :)"
 sum=$(($sync + $unsync))
 
 if [[ "${QUICKLY}" == "true" ]]; then

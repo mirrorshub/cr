@@ -7,6 +7,10 @@ set -o pipefail
 source "$(dirname "${BASH_SOURCE}")/helper.sh"
 cd "${ROOT}"
 
+DEBUG="${DEBUG:-}"
+INCREMENTAL="${INCREMENTAL:-}"
+PARALLET="${PARALLET:-0}"
+
 declare -A DOMAIN_MAP=()
 
 for image in $(helper::get_source); do
@@ -20,17 +24,29 @@ for image in $(helper::get_source); do
 done
 
 for domain in "${!DOMAIN_MAP[@]}"; do
-    file="${domain}.yaml"
     list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
-    echo "'${domain}':" >"${file}"
-    echo "  images-by-tag-regex:" >>"${file}"
     for image in ${list}; do
         regex="${DEFAULT_REGEX}"
         if [[ "${image}" =~ ":" ]]; then
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        echo "    '${image}': '${regex}'" >>"${file}"
+        QUICKLY=true SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FORUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}")/${image}" || {
+            echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain ${domain})/${image}"
+        }
     done
-    ${SKOPEO} sync --all --remove-signatures --src yaml --dest docker -f oci "${file}" $(helper::replace_domain "${domain}")
+done
+
+for domain in "${!DOMAIN_MAP[@]}"; do
+    list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
+    for image in ${list}; do
+        regex="${DEFAULT_REGEX}"
+        if [[ "${image}" =~ ":" ]]; then
+            regex="${image##*:}"
+            image="${image%:*}"
+        fi
+        SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FORUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}")/${image}" || {
+            echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain ${domain})/${image}"
+        }
+    done
 done
