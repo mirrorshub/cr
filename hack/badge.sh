@@ -4,6 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+QUICKLY="${QUICKLY:-}"
 LOGFILE="./sync.log"
 sync="$(cat "${LOGFILE}" | grep " SYNCHRONIZED: " | wc -l | tr -d ' ' || :)"
 unsync="$(cat "${LOGFILE}" | grep " NOT-SYNCHRONIZED: " | wc -l | tr -d ' ' || :)"
