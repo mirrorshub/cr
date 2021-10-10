@@ -240,6 +240,10 @@ function diff-image() {
         fi
         for tag in ${reduce}; do
             echo "${SELF}: NOT-SYNCHRONIZED: ${image1}:${tag} and ${image2}:${tag} are not in synchronized, ${image2}:${tag} does not exist" >&2
+            if [[ "${SYNC}" == "true" ]]; then
+                echo "${SELF}: SYNCHRONIZE: synchronize from ${image1}:${tag} to ${image2}:${tag}" >&2
+                copy-image "${image1}:${tag}" "${image2}:${tag}" >&2
+            fi
         done
         for tag in ${increase}; do
             echo "${SELF}: NOT-SYNCHRONIZED: ${image1}:${tag} and ${image2}:${tag} are not in synchronized, ${image1}:${tag} does not exist" >&2
