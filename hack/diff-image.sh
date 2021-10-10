@@ -97,7 +97,7 @@ function inspect() {
     local schemaVersion=$(echo "${raw}" | ${JQ} -r '.schemaVersion')
     case "${schemaVersion}" in
     1)
-        echo "${raw}" | ${JQ} -r '.fsLayers[].blobSum'
+        echo "${raw}" | ${JQ} -r '.fsLayers[].blobSum' | tac
         ;;
     2)
         local mediaType=$(echo "${raw}" | ${JQ} -r '.mediaType // "" ')
