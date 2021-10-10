@@ -1,3 +1,4 @@
-docker.io/library=ghcr.io/mirrorshub/docker
-gcr.io=ghcr.io/mirrorshub/gcr
+k8s.gcr.io/ingress-nginx=ghcr.io/mirrorshub/k8s-ingress-nginx
 k8s.gcr.io=ghcr.io/mirrorshub/k8s
+gcr.io=ghcr.io/mirrorshub/gcr
+docker.io/library=ghcr.io/mirrorshub/docker
