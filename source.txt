@@ -5,6 +5,7 @@ docker.io/library/mysql
 docker.io/library/nginx
 docker.io/library/redis
 docker.io/library/registry
+docker.io/kindest/node
 k8s.gcr.io/coredns
 k8s.gcr.io/kube-apiserver
 k8s.gcr.io/kube-controller-manager
