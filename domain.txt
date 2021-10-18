@@ -1,4 +1,5 @@
 quay.io/containers=ghcr.io/mirrorshub/containers
+quay.io/coreos=ghcr.io/mirrorshub/coreos
 k8s.gcr.io/ingress-nginx=ghcr.io/mirrorshub/k8s-ingress-nginx
 k8s.gcr.io=ghcr.io/mirrorshub/k8s
 gcr.io/kubebuilder=ghcr.io/mirrorshub/kubebuilder
