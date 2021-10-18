@@ -19,5 +19,5 @@ k8s.gcr.io/kube-proxy
 k8s.gcr.io/kube-scheduler
 k8s.gcr.io/pause
 quay.io/containers/skopeo
-gcr.io/distroless/static
+gcr.io/distroless/static:nonroot|latest
 gcr.io/kubebuilder/kube-rbac-proxy
