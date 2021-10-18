@@ -1,6 +1,6 @@
 k8s.gcr.io/ingress-nginx=ghcr.io/mirrorshub/k8s-ingress-nginx
 k8s.gcr.io=ghcr.io/mirrorshub/k8s
-gcr.io/kubebuilder/=ghcr.io/mirrorshub/kubebuilder
+gcr.io/kubebuilder=ghcr.io/mirrorshub/kubebuilder
 gcr.io=ghcr.io/mirrorshub/gcr
 docker.io/kindest=ghcr.io/mirrorshub/kindest
 docker.io/library=ghcr.io/mirrorshub/docker
