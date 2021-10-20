@@ -36,7 +36,7 @@ for domain in "${!DOMAIN_MAP[@]}"; do
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        DEBUG="${DEBUG}" QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FORUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" 2>&1 | tee -a "${LOGFILE}" || {
+        DEBUG="${DEBUG}" QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" 2>&1 | tee -a "${LOGFILE}" || {
             echo "Error: diff image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
         }
     done

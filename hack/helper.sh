@@ -5,7 +5,7 @@ set -o nounset
 set -o pipefail
 
 ROOT="${ROOT:-$(dirname "${BASH_SOURCE}")/..}"
-DEFAULT_REGEX='^v?\d+(\.\d+){0,2}(-.+)?$|^latest$'
+DEFAULT_REGEX='^v?[0-9]+(\.[0-9]+){0,2}(-.+)?$|^[a-z]+$'
 SKOPEO="${SKOPEO:-skopeo}"
 
 function helper::fullpath() {

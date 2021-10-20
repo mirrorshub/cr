@@ -9,7 +9,7 @@ k8s.gcr.io/ingress-nginx/kube-webhook-certgen
 k8s.gcr.io/ingress-nginx/controller
 k8s.gcr.io/coredns
 gcr.io/kubebuilder/kube-rbac-proxy
-gcr.io/distroless/static:nonroot|latest
+gcr.io/distroless/static
 docker.io/library/ubuntu
 docker.io/library/registry
 docker.io/library/redis

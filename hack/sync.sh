@@ -45,7 +45,7 @@ for domain in "${!DOMAIN_MAP[@]}"; do
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FORUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
+        SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
             echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
         }
     done
