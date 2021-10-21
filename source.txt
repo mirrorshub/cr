@@ -1,6 +1,7 @@
 quay.io/coreos/flannel
 quay.io/containers/skopeo
 k8s.gcr.io/pause
+k8s.gcr.io/metrics-server/metrics-server
 k8s.gcr.io/kube-scheduler
 k8s.gcr.io/kube-proxy
 k8s.gcr.io/kube-controller-manager
@@ -10,6 +11,7 @@ k8s.gcr.io/ingress-nginx/controller
 k8s.gcr.io/coredns
 gcr.io/kubebuilder/kube-rbac-proxy
 gcr.io/distroless/static
+gcr.io/cadvisor/cadvisor
 docker.io/library/ubuntu
 docker.io/library/registry
 docker.io/library/redis
@@ -17,6 +19,7 @@ docker.io/library/python
 docker.io/library/node
 docker.io/library/nginx
 docker.io/library/mysql
+docker.io/library/haproxy
 docker.io/library/golang
 docker.io/library/centos
 docker.io/library/busybox
