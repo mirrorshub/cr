@@ -21,6 +21,8 @@ docker.io/library/nginx
 docker.io/library/mysql
 docker.io/library/haproxy
 docker.io/library/golang
+docker.io/library/fedora
+docker.io/library/debian
 docker.io/library/centos
 docker.io/library/busybox
 docker.io/library/alpine
