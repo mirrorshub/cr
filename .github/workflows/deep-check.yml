@@ -13,7 +13,7 @@ jobs:
       - name: Check
         env:
           INCREMENTAL: "true"
-          PARALLET: "10"
+          PARALLET: "20"
         run: |
           ./hack/check.sh
       - name: Update badge
