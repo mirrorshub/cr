@@ -283,7 +283,7 @@ function main() {
     local list=$(diff-image "${image1}" "${image2}")
 
     local notsynced=()
-    if [[ "${QUICKLY}" == "true" ]] || [[ "${PARALLET}" -eq 0 ]]; then
+    if [[ "${PARALLET}" -eq 0 ]]; then
         for tag in ${list}; do
             diff-image-with-tag "${image1}:${tag}" "${image2}:${tag}" >/dev/null || {
                 if [[ "${SYNC}" == "true" ]]; then
