@@ -149,12 +149,12 @@ function copy-image() {
     local image1="${1:-}"
     local image2="${2:-}"
 
-    ${SKOPEO} copy --all --dest-tls-verify=false --format oci "docker://${image1}" "docker://${image2}"
+    ${SKOPEO} copy --all --src-no-creds --dest-tls-verify=false --format oci "docker://${image1}" "docker://${image2}"
 }
 
 function list-tags() {
     local image="${1:-}"
-    local raw="$(${SKOPEO} list-tags --tls-verify=false "docker://${image}" | ${JQ} -r '.Tags[]' | sort)"
+    local raw="$(${SKOPEO} list-tags --no-creds --tls-verify=false "docker://${image}" | ${JQ} -r '.Tags[]' | sort)"
 
     if [[ "${FOCUS}" != "" ]]; then
         raw="$(echo "${raw}" | grep -E "${FOCUS}" || :)"
