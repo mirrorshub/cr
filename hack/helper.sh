@@ -7,23 +7,7 @@ set -o pipefail
 ROOT="${ROOT:-$(dirname "${BASH_SOURCE}")/..}"
 DEFAULT_REGEX='^v?[0-9]+(\.[0-9]+){0,2}(-.+)?$|^[a-z]+$'
 SKOPEO="${SKOPEO:-skopeo}"
-
-function helper::fullpath() {
-    local dir="$(dirname $1)"
-    local base="$(basename $1)"
-    if [[ "${base}" == "." || "${base}" == ".." ]]; then
-        dir="$1"
-        base=""
-    fi
-    if ! [[ -d ${dir} ]]; then
-        return 1
-    fi
-    pushd ${dir} >/dev/null 2>&1
-    echo ${PWD}/${base}
-    popd >/dev/null 2>&1
-}
-
-ROOT=$(helper::fullpath ${ROOT})
+ROOT=$(realpath ${ROOT})
 
 function helper::replace_domain() {
     local domain="${1}"
