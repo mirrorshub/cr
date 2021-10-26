@@ -1,8 +1,8 @@
-name: Sync
+name: Deep Sync
 
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: "0 7 * * *"
 
   workflow_dispatch:
 
@@ -17,7 +17,6 @@ jobs:
           GH_ID: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INCREMENTAL: "true"
-          QUICKLY: "true"
           PARALLET: "30"
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io

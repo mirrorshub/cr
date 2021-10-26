@@ -9,6 +9,7 @@ cd "${ROOT}"
 
 DEBUG="${DEBUG:-}"
 INCREMENTAL="${INCREMENTAL:-}"
+QUICKLY="${QUICKLY:-}"
 PARALLET="${PARALLET:-0}"
 
 declare -A DOMAIN_MAP=()
@@ -31,21 +32,7 @@ for domain in "${!DOMAIN_MAP[@]}"; do
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        QUICKLY=true SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
-            echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
-        }
-    done
-done
-
-for domain in "${!DOMAIN_MAP[@]}"; do
-    list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
-    for image in ${list}; do
-        regex="${DEFAULT_REGEX}"
-        if [[ "${image}" =~ ":" ]]; then
-            regex="${image##*:}"
-            image="${image%:*}"
-        fi
-        SYNC=true INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
+        SYNC=true QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
             echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
         }
     done
