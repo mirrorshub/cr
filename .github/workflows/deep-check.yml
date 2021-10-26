@@ -15,7 +15,7 @@ jobs:
           INCREMENTAL: "true"
           PARALLET: "30"
         run: |
-          ./hack/check.sh
+          ./hack/diff.sh
       - name: Update badge
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }} # Generated for update gist

@@ -18,7 +18,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INCREMENTAL: "true"
           QUICKLY: "true"
+          SYNC: "true"
           PARALLET: "30"
         run: |
           sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
-          sudo ./hack/sync.sh
+          sudo ./hack/diff.sh

@@ -10,6 +10,7 @@ cd "${ROOT}"
 DEBUG="${DEBUG:-}"
 INCREMENTAL="${INCREMENTAL:-}"
 QUICKLY="${QUICKLY:-}"
+SYNC="${SYNC:-}"
 PARALLET="${PARALLET:-0}"
 
 declare -A DOMAIN_MAP=()
@@ -24,6 +25,10 @@ for image in $(helper::get_source); do
     fi
 done
 
+LOGFILE="./sync.log"
+echo >"${LOGFILE}"
+
+count=0
 for domain in "${!DOMAIN_MAP[@]}"; do
     list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
     for image in ${list}; do
@@ -32,8 +37,8 @@ for domain in "${!DOMAIN_MAP[@]}"; do
             regex="${image##*:}"
             image="${image%:*}"
         fi
-        SYNC=true QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" || {
-            echo "Error: synchronize image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
+        DEBUG="${DEBUG}" SYNC="${SYNC}" QUICKLY="${QUICKLY}" INCREMENTAL="${INCREMENTAL}" PARALLET="${PARALLET}" FOCUS="${regex}" ./hack/diff-image.sh "${domain}/${image}" "$(helper::replace_domain "${domain}/${image}")" 2>&1 | tee -a "${LOGFILE}" || {
+            echo "Error: diff image ${domain}/${image} $(helper::replace_domain "${domain}/${image}")"
         }
     done
 done
