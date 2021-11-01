@@ -12,13 +12,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Sync Images
+      - name: Login Registry
         env:
           GH_ID: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo mkdir -p /run/containers && sudo chmod 777 /run/containers
+          skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
+      - name: Sync Images
+        env:
           INCREMENTAL: "true"
           SYNC: "true"
           PARALLET: "30"
         run: |
-          sudo skopeo login -u ${GH_ID} -p ${GH_TOKEN} ghcr.io
-          sudo ./hack/diff.sh
+          ./hack/diff.sh
