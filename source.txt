@@ -9,6 +9,7 @@ k8s.gcr.io/kube-apiserver
 k8s.gcr.io/ingress-nginx/kube-webhook-certgen
 k8s.gcr.io/ingress-nginx/controller
 k8s.gcr.io/coredns
+k8s.gcr.io/build-image/kube-cross
 gcr.io/kubebuilder/kube-rbac-proxy
 gcr.io/distroless/static
 gcr.io/cadvisor/cadvisor
