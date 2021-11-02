@@ -85,6 +85,8 @@ function check() {
     fi
 }
 
+emptyLayer="sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4"
+
 function inspect() {
     local image="${1:-}"
     local raw=$(${SKOPEO} inspect --no-creds --raw --tls-verify=false "docker://${image}")
@@ -97,7 +99,7 @@ function inspect() {
     local schemaVersion=$(echo "${raw}" | ${JQ} -r '.schemaVersion')
     case "${schemaVersion}" in
     1)
-        echo "${raw}" | ${JQ} -r '.fsLayers[].blobSum' | tac
+        echo "${raw}" | ${JQ} -r '.fsLayers[].blobSum' | grep -v "${emptyLayer}" | tac
         ;;
     2)
         local mediaType=$(echo "${raw}" | ${JQ} -r '.mediaType // "" ')
@@ -111,7 +113,7 @@ function inspect() {
 
         case "${mediaType}" in
         "layers" | "application/vnd.docker.distribution.manifest.v2+json")
-            echo "${raw}" | ${JQ} -r '.layers[].digest'
+            echo "${raw}" | ${JQ} -r '.layers[].digest' | grep -v "${emptyLayer}"
             ;;
         "manifests" | "application/vnd.docker.distribution.manifest.list.v2+json")
             local line=$(echo "${raw}" | ${JQ} -j '.manifests[] | .platform.architecture , " " , .platform.os , "\n"' | sort)
