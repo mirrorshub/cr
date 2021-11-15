@@ -68,15 +68,15 @@ function check() {
         return 2
     fi
 
-    if [[ "${image1}" =~ ":" ]]; then
-        if [[ "${image2}" =~ ":" ]]; then
+    if [[ "${image1#*/}" =~ ":" ]]; then
+        if [[ "${image2#*/}" =~ ":" ]]; then
             return 0
         else
             echo "${SELF}: ERROR: ${image1} and ${image2} must both be full images or not be tag references" >&2
             return 2
         fi
     else
-        if [[ "${image2}" =~ ":" ]]; then
+        if [[ "${image2#*/}" =~ ":" ]]; then
             echo "${SELF}: ERROR: ${image1} and ${image2} must both be full images or not be tag references" >&2
             return 2
         else
@@ -271,7 +271,7 @@ function main() {
     local image1="${1:-}"
     local image2="${2:-}"
 
-    if [[ "${image1}" =~ ":" ]]; then
+    if [[ "${image1#*/}" =~ ":" ]]; then
         diff-image-with-tag "${image1}" "${image2}" >/dev/null || {
             if [[ "${SYNC}" == "true" ]]; then
                 echo "${SELF}: SYNCHRONIZE: synchronize from ${image1}:${tag} to ${image2}:${tag}" >&2

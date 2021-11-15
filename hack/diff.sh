@@ -35,7 +35,7 @@ for domain in "${!DOMAIN_MAP[@]}"; do
     list=$(echo ${DOMAIN_MAP[${domain}]} | tr ' ' '\n' | shuf)
     for image in ${list}; do
         regex="${DEFAULT_REGEX}"
-        if [[ "${image}" =~ ":" ]]; then
+        if [[ "${image#*/}" =~ ":" ]]; then
             regex="${image##*:}"
             image="${image%:*}"
         fi
