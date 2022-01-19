@@ -20,7 +20,7 @@ jobs:
       - name: Update badge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Generated for update gist
-          BADGE_PREFIX: "https://github.com/${{ github.repository }}/gh-pages"
+          BADGE_PREFIX: "git://${{ github.repository }}/gh-pages"
           QUICKLY: "true"  
         run: |
           wget https://github.com/wzshiming/putingh/releases/download/v0.6.2/putingh_linux_amd64 -O /usr/local/bin/putingh && chmod +x /usr/local/bin/putingh
