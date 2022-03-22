@@ -1,5 +1,6 @@
 quay.io/coreos/flannel
 quay.io/containers/skopeo
+k8s.gcr.io/etcd
 k8s.gcr.io/pause
 k8s.gcr.io/metrics-server/metrics-server
 k8s.gcr.io/kube-scheduler
